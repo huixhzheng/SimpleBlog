@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<aop:aspectj-autoproxy />
+
+	<context:load-time-weaver />
+
+	<bean id="uiBlogConverter"
+		class="com.duell.blogging.view.converter.blogentry.SimpleUIBlogEntryConverter" />
+	<!-- <bean id="uiBlog" class="com.duell.blogging.view.UIBlogEntry" /> -->
+
+	<!-- <bean id="bloggingServiceBean" class="com.duell.blogging.service.BloggingServiceImpl" 
+		/> -->
+	<!-- <bean id="bloggingServiceBean" class="com.duell.blogging.service.BloggingServiceMockImpl" 
+		/> -->
+
+	<bean id="logAspect" class="com.duell.logging.aop.LoggingAspect" />
+
+<!-- 	<aop:config> -->
+<!-- 		<aop:aspect id="loggingAspect" ref="logAspect"> -->
+<!-- 			<aop:pointcut expression="execution(* com.duell.blogging.service.*.*(..))" -->
+<!-- 				id="pointCutAroundService" /> -->
+<!-- 			<aop:around method="serviceLogger" pointcut-ref="pointCutAroundService" /> -->
+<!-- 			<aop:pointcut -->
+<!-- 				expression="execution(* com.duell.blogging.view.converter.*.*(..))" -->
+<!-- 				id="pointCutAroundConverter" /> -->
+<!-- 			<aop:around method="converterLogger" pointcut-ref="pointCutAroundConverter" /> -->
+<!-- 		</aop:aspect> -->
+<!-- 	</aop:config> -->
+
+</beans>

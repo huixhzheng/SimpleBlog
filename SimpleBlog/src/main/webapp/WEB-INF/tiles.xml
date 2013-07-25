@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<!-- Default Values -->
+	<definition name="base.definition" template="/WEB-INF/jsp/common/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/jsp/common/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/jsp/common/menu.jsp" />
+		<put-attribute name="tagMenu" value="/WEB-INF/jsp/common/tagMenu.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/common/footer.jsp" />
+	</definition>
+
+	<!-- can override certain values if needed -->
+	<!-- when ModelAndView("contact", "command", new Contact()); (or something 
+		similar) returns control to 'contact' the below configuration will match -->
+	<definition name="contact" extends="base.definition">
+		<put-attribute name="title" value="Contact Manager" />
+		<put-attribute name="body" value="/WEB-INF/jsp/contact.jsp" />
+	</definition>
+
+	<!-- Home Page -->
+	<definition name="home.page" extends="base.definition">
+		<put-attribute name="title" value="Home Page" />
+		<put-attribute name="body" value="home.page.content.layout" />
+	</definition>
+	<definition name="home.page.content.layout" template="/WEB-INF/jsp/home/homeContentLayout.jsp">
+		<put-attribute name="home.page.content" value="/WEB-INF/jsp/home/content.jsp" />
+	</definition>
+	
+
+	<!-- An individual blog entry -->	
+	<definition name="blog.page" extends="base.definition">
+		<put-attribute name="title" value="Blog Page" />
+		<!-- just reference by name in include another tile definition directly -->
+		<put-attribute name="body" value="blog.content.layout" />
+	</definition>
+	<definition name="blog.content.layout" template="/WEB-INF/jsp/blog/blogContentLayout.jsp">
+		<put-attribute name="blog.content.entry" value="/WEB-INF/jsp/blog/content.jsp" />
+		<put-attribute name="blog.content.meta.tags" value="/WEB-INF/jsp/blog/metaTags.jsp" />
+		<put-attribute name="blog.content.comments" value="/WEB-INF/jsp/blog/comments.jsp" />
+	</definition>
+
+</tiles-definitions>

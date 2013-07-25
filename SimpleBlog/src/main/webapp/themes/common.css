@@ -1,0 +1,25 @@
+table.commentOuter{
+	min-width:100%;
+	max-width:800px;
+	/*background-color:blue;*/
+}
+table.commentIndividual{
+	min-width:100%;
+	max-width:800px;
+}
+.continueReading{
+	font-size:50%;
+}
+.individualTag
+{
+	font-weight:bold;
+	font-size:150%;
+}
+.commentControls{
+	background-color: teal;
+	text-align: right;
+}
+.blogTitle{
+	font-size:150%;
+	font-weight:bold;
+}
