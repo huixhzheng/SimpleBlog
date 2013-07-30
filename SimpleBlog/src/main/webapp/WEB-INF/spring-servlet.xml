@@ -169,15 +169,27 @@
 
 
 	<aop:aspectj-autoproxy />
-	<!-- <bean id="bloggingServiceBean" class="com.duell.blogging.service.BloggingServiceMockImpl" 
-		/> -->
-	<bean id="bloggingServiceBean" class="com.duell.blogging.service.BloggingServiceImpl" />
+<!-- 	<bean id="bloggingServiceBean" class="com.duell.blogging.service.BloggingServiceMockImpl" /> -->
+	<bean id="bloggingServiceBean" class="com.duell.blogging.service.BloggingServiceImpl" /> 
+
+
+	<!-- Converter Beans -->
+
+	<bean id="tagConverter"
+		class="com.duell.blogging.view.converter.tagentry.SimpleUITagConverter" />
+
+
 	<bean id="blogConverter"
 		class="com.duell.blogging.view.converter.blogentry.SimpleUIBlogEntryConverter">
-		<property name="commentConverter" ref="commentConverterBean" />
-		<property name="tagConverter" ref="tagConverterBean" />
+		<property name="commentConverter" ref="commentConverter" />
+		<property name="tagConverter" ref="tagConverter" />
 	</bean>
-	<bean id="commentConverterBean" class="com.duell.blogging.view.converter.comment.SimpleCommentConverter" />
-	<bean id="tagConverterBean" class="com.duell.blogging.view.converter.tagentry.SimpleUITagConverter" />
+	<bean id="commentConverter"
+		class="com.duell.blogging.view.converter.comment.SimpleCommentConverter" />
 
+	<!-- Decorator beans -->
+	<bean id="blogDecorator"
+		class="com.duell.blogging.view.decorator.blogentry.ShortenDisplayContentDecorator">
+		<property name="numChars" value="130" />
+	</bean>
 </beans>
