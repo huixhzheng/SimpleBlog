@@ -1,4 +1,96 @@
 body {
-    background-color: #888;
+    background-color: #6D6D6D;
     color: white;
+}
+.mainContent
+{
+	background-color:#6D6D6D;
+	color:white;
+	
+}
+.header
+{
+	background-color:white;
+	color:black;
+	background-image: linear-gradient(bottom, rgb(255,255,255) 56%, rgb(133,133,133) 100%);
+background-image: -o-linear-gradient(bottom, rgb(255,255,255) 56%, rgb(133,133,133) 100%);
+background-image: -moz-linear-gradient(bottom, rgb(255,255,255) 56%, rgb(133,133,133) 100%);
+background-image: -webkit-linear-gradient(bottom, rgb(255,255,255) 56%, rgb(133,133,133) 100%);
+background-image: -ms-linear-gradient(bottom, rgb(255,255,255) 56%, rgb(133,133,133) 100%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.56, rgb(255,255,255)),
+	color-stop(1, rgb(133,133,133))
+);
+	
+}
+.mainNav,a.mainNav,.menuItem
+{
+	background-color:white;
+	color:black;
+	/*Used http://gradients.glrzad.com/ for colour gradients */
+	
+	background-image: linear-gradient(bottom, rgb(112,110,112) 48%, rgb(255,255,255) 74%);
+	background-image: -o-linear-gradient(bottom, rgb(112,110,112) 48%, rgb(255,255,255) 74%);
+	background-image: -moz-linear-gradient(bottom, rgb(112,110,112) 48%, rgb(255,255,255) 74%);
+	background-image: -webkit-linear-gradient(bottom, rgb(112,110,112) 48%, rgb(255,255,255) 74%);
+	background-image: -ms-linear-gradient(bottom, rgb(112,110,112) 48%, rgb(255,255,255) 74%);
+
+	background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.48, rgb(112,110,112)),
+	color-stop(0.74, rgb(255,255,255))
+);
+
+}
+.sideNav
+{
+	background-color:black;
+	color:white;
+	border-radius:15px;
+	border: 2px solid;
+	border-color: white;
+}
+
+.individualTag {
+	color:#761E93;
+}
+
+
+.blogTitle {
+	color: #761E93;
+}
+.blogListEntry
+{
+	border-radius:15px;
+	border: 2px solid;
+	border-color: white;
+	background-color: black;
+	padding:2px;
+}
+.topContent
+{
+	border-radius:15px;
+	border: 2px solid;
+	border-color: black;
+}
+.allContent
+{
+	background-color:#6D6D6D;
+	border:0px;
+	box-shadow: 0px 0px 0px #A6A6A6; 
+}
+
+.footer
+{
+	background-color:black;
+	color:white;
+	border-radius:15px;
+	border: 2px solid;
+	border-color: black;
 }
