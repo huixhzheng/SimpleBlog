@@ -1,13 +1,12 @@
 package com.duell.blogging.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +15,14 @@ import com.duell.blogging.dao.TagsDAO;
 import com.duell.blogging.form.BlogEntry;
 import com.duell.blogging.form.CommentEntry;
 import com.duell.blogging.form.TagEntry;
+import com.duell.blogging.service.paging.PagingInfo;
 import com.duell.blogging.view.UIBlogEntry;
 import com.duell.blogging.view.UIComment;
 import com.duell.blogging.view.UITag;
 import com.duell.blogging.view.converter.UIConverter;
 import com.duell.blogging.view.converter.blogentry.SimpleUIBlogEntryConverter;
-import com.duell.blogging.view.converter.tagentry.SimpleUITagConverter;
 import com.duell.blogging.view.decorator.UIDecorator;
-import com.duell.blogging.view.decorator.blogentry.ShortenDisplayContentDecorator;
+import com.duell.blogging.view.page.BlogListPageBean;
 
 @Service
 public class BloggingServiceImpl implements BloggingService {
@@ -32,63 +31,80 @@ public class BloggingServiceImpl implements BloggingService {
 	private BloggingDAO bloggingDAO;
 	
 	@Autowired
-	@Qualifier("blogConverter")
+	@Qualifier("blogConverter")//Qualifier to specify a specific impl that is named in the xml
 	private UIConverter<UIBlogEntry,BlogEntry> blogConverter;
+	
+	@Autowired
+	@Qualifier("tagConverter")
+	private UIConverter<UITag,TagEntry> tagConverter;
+	
+	@Autowired
+	@Qualifier("blogDecorator")
+	private UIDecorator<UIBlogEntry> blogDecorator;
 	
 	@Autowired
 	private TagsDAO tagsDAO;
 	
 	@Transactional
-	public List<UIBlogEntry> listBlogEntries() {
+	public BlogListPageBean listBlogEntries() {
 
-		return listBlogEntries(-1);
+		return listBlogEntries(new PagingInfo());
 	}
 	@Transactional
-	public List<UIBlogEntry>listBlogEntries(Integer maxNum)
+	public BlogListPageBean listBlogEntries(PagingInfo pageInfo)
 	{
 		/*
 		 * Convert the objects coming back
 		 */
-		List<BlogEntry> blogEntries = bloggingDAO.listBlogEntries(maxNum); 
-		List<UIBlogEntry> uiBlogEntries = null ;
-		
-//		UIConverter<UIBlogEntry,BlogEntry> converter=new SimpleUIBlogEntryConverter();
-//		ApplicationContext appContext = new ClassPathXmlApplicationContext(new String[]{"applicationContext.xml"});
-		
-//		UIConverter<UIBlogEntry,BlogEntry> converter= (UIConverter<UIBlogEntry,BlogEntry>)appContext.getBean("uiBlogConverter");
-		
-		UIDecorator<UIBlogEntry> decorator=new ShortenDisplayContentDecorator(130);
+		BlogListPageBean blogListPageBean = new BlogListPageBean();
+		Collection<BlogEntry> blogEntries = bloggingDAO.listBlogEntries(pageInfo); 
 	
-//		uiBlogEntries = new ArrayList<UIBlogEntry>(converter.convertToUI(blogEntries, decorator));
-		uiBlogEntries = new ArrayList<UIBlogEntry>(blogConverter.convertToUI(blogEntries, decorator));
+		List<UIBlogEntry> uiBlogEntries = null ;
+		uiBlogEntries = new ArrayList<UIBlogEntry>(blogConverter.convertToUI(blogEntries, blogDecorator));
+	
+		Integer numBlogs = bloggingDAO.getBlogCount();
+		if(pageInfo.getPageNum() * pageInfo.getEntriesPerPage() < numBlogs)
+		{
+			pageInfo.setHasNext(true);
+		}
+		else
+		{
+			pageInfo.setHasNext(false);
+		}
 		
-		return uiBlogEntries;
+//		int startEntry = uiBlogEntries.get(0).getId();
+//		int endEntry = uiBlogEntries.get(uiBlogEntries.size()-1).getId();
+//		int pageNum = pageInfo.getPageNum();
+//		if(startEntry > (pageInfo.getPageNum() * pageInfo.getEntriesPerPage()))
+//		{
+//			pageNum++;
+//		}
+//		else
+//		{
+//			pageNum--;
+//		}
+//		
+		
+		
+		
+		blogListPageBean.setBlogEntries(uiBlogEntries);
+//		PagingInfo pageInfo2 = new PagingInfo(pageNum,pageInfo.getEntriesPerPage());
+//		pageInfo2.setHasNext(true);
+//		blogListPageBean.setPagingInfo(pageInfo2);
+		blogListPageBean.setPagingInfo(pageInfo);
+		blogListPageBean.setSideTagEntries(listTagEntries());
+		
+		return blogListPageBean;
 	}
 
 	@Transactional
 	public UIBlogEntry getBlogById(Integer id)
 	{
-		//Retrieve data from DB and Extract from Map
 		BlogEntry entry = bloggingDAO.getBlogById(id);
-//		BlogEntry entry = (BlogEntry)map.get("blogEntry");
 		
 		//convert to UI
-		UIConverter<UIBlogEntry,BlogEntry> converter = new SimpleUIBlogEntryConverter();
-		UIBlogEntry uiBlogEntry = converter.convertToUI(entry);
+		UIBlogEntry uiBlogEntry = blogConverter.convertToUI(entry);
 		
-		//place back in map
-//		map.put("blogEntry", uiBlogEntry);
-		
-		//Retrieve the tag information from the DB
-		/*List<TagEntry> tagList = tagsDAO.getAllTagsForBlogById(id);
-		UIConverter<UITag,TagEntry> tagConverter = new SimpleUITagConverter();
-		List<UITag> uiTagList = new ArrayList<UITag>(tagConverter.convertToUI(tagList));
-		
-		String tagListKey = "uiTagList";
-		map.put(tagListKey, uiTagList);
-*/		
-		
-//		return map;
 		return uiBlogEntry;
 	}
 	@Transactional
@@ -105,18 +121,17 @@ public class BloggingServiceImpl implements BloggingService {
 	}
 	
 	@Transactional
-	public List<UITag> listTagEntries()
+	public Collection<UITag> listTagEntries()
 	{
-		List<TagEntry> dbTags = tagsDAO.getAllTags();
-		UIConverter<UITag,TagEntry> converter = new SimpleUITagConverter();
-		List<UITag> uiTags = new ArrayList<UITag>(converter.convertToUI(dbTags));
+		Collection<TagEntry> dbTags = tagsDAO.getAllTags();
+		Collection<UITag> uiTags = new ArrayList<UITag>(tagConverter.convertToUI(dbTags));
 	
 		return uiTags;
 	}
 	@Transactional 
 	public String getTagName(Integer tagID)
 	{
-		List<UITag> tags = listTagEntries();
+		Collection<UITag> tags = listTagEntries();
 		
 		for(UITag tag:tags)
 		{
@@ -129,12 +144,16 @@ public class BloggingServiceImpl implements BloggingService {
 	}
 	
 	@Transactional
-	public List<UIBlogEntry> getBlogsWithTag(Integer tagID)
+	public BlogListPageBean getBlogsWithTag(Integer tagID)
 	{
-		List<BlogEntry> dbBlogEntry = bloggingDAO.getBlogsByTag(tagID);
-		UIConverter<UIBlogEntry,BlogEntry> converter = new SimpleUIBlogEntryConverter();
+		Collection<BlogEntry> dbBlogEntries = bloggingDAO.getBlogsByTag(tagID);
 		
-		return new ArrayList<UIBlogEntry>(converter.convertToUI(dbBlogEntry));
+		BlogListPageBean pageBean = new BlogListPageBean();
+		pageBean.setBlogEntries(blogConverter.convertToUI(dbBlogEntries));
+		pageBean.setPagingInfo(null);
+		pageBean.setSideTagEntries(listTagEntries());
+		
+		return pageBean;
 	}
 	
 }
