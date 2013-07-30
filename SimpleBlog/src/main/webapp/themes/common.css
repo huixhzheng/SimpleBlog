@@ -1,3 +1,36 @@
+.siteTitle{
+	
+	padding-top:50px;
+	padding-left:50px;
+	font-size:200%;
+	font-weight:bold;
+}
+
+.continueReading{
+	font-size:50%;
+}
+.individualTag
+{
+	font-weight:bold;
+	font-size:150%;
+}
+.blogTitle{
+	font-size:150%;
+	font-weight:bold;
+}
+
+.mainNav
+{
+	font-weight:bold;
+	font-size:125%;
+}
+
+a 
+{
+	text-decoration: none;
+}
+
+
 table.commentOuter{
 	min-width:100%;
 	max-width:800px;
@@ -7,19 +40,17 @@ table.commentIndividual{
 	min-width:100%;
 	max-width:800px;
 }
-.continueReading{
-	font-size:50%;
-}
-.individualTag
-{
-	font-weight:bold;
-	font-size:150%;
-}
+
+
 .commentControls{
 	background-color: teal;
 	text-align: right;
 }
-.blogTitle{
-	font-size:150%;
-	font-weight:bold;
+.allContent
+{
+	
+	width: 900px; 
+	margin: 0 auto; 
+	box-shadow: 10px 10px 5px #A6A6A6; 
+	border:1px solid;
 }
