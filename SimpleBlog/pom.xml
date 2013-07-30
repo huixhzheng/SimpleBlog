@@ -35,6 +35,14 @@
 		</plugins>
 	</build>
 
+	<repositories>
+		<!--added this repo to get access to a library which hibernate had a dependency on: javax.transaction:jta:jar:1.0.1B -->
+		<repository>
+		    <id>java.net</id>
+		    <url>http://download.java.net/maven/2/</url>
+		</repository>
+	</repositories>
+
 	<!-- set Spring version -->
 	<properties>
 		<spring.version>3.2.3.RELEASE</spring.version>
