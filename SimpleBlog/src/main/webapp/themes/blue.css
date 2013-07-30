@@ -2,3 +2,32 @@ body {
     background-color: #DBF5FF;
     color: #007AAB;
 }
+
+.mainContent
+{
+	background-color:light-blue;
+	color: #007AAB;
+	
+}
+
+.header
+{
+	background-color:light-blue;
+	color:#007AAB;
+}
+.mainNav
+{
+	background-color:#33CCFF;
+	color:white;
+}
+
+.sideNav
+{
+	background-color:light-blue;
+	color:white;
+}
+.footer
+{
+	background-color:#DBF5FF;
+	color:white;
+}
