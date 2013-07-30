@@ -17,6 +17,8 @@ public class SimpleUIBlogEntryConverter extends
 	Logger logger = Logger.getLogger(SimpleUIBlogEntryConverter.class);
 	/*
 	 * The two below converters will be autowired in via xml configuration.
+	 * They require setter methods for xml autowiring.
+	 * If using @Autowired annotation then setters would not be required
 	 */
 	private UIConverter<UITag, TagEntry> tagConverter;
 	private UIConverter<UIComment, CommentEntry> commentConverter;
