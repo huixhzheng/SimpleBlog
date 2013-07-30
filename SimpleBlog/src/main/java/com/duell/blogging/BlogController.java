@@ -7,8 +7,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -21,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.duell.blogging.service.BloggingService;
+import com.duell.blogging.service.paging.PagingInfo;
 import com.duell.blogging.view.UIBlogEntry;
 import com.duell.blogging.view.UIComment;
+import com.duell.blogging.view.page.BlogListPageBean;
 import com.duell.blogging.view.validator.CommentValidator;
 
 @Controller
@@ -49,31 +49,30 @@ public class BlogController {
 	 * TODO - DONE change this to the last 5 entries.
 	 * 
 	 * TODO - DONE implement validators
+	 * TODO - DONE implement some sort of AOP for logging
 	 * 
 	 * TODO - Make it look nicer when there is no list of blogs returned (either
 	 * no blog, or nothing returned for tag search)
 	 * 
-	 * TODO - implement paging 
-	 * TODO - Anchor the menu links to the top 
+	 * TODO - DONE implement paging 
+	 * TODO - DONE Anchor the menu links to the top 
 	 * TODO - Implement posting a comment on a comment. 
-	 * TODO - implement some way to hide the reply box to a comment until it is needed 
+	 * TODO - DONE implement some way to hide the reply box to a comment until it is needed 
 	 *  
-	 * TODO - Make the table size consistent
+	 * TODO - DONE Make the table size consistent
 	 * 
 	 * TODO - add a field in the comments for comment time 
-	 * TODO - implement some sort of AOP for logging
+	 * 
+	 * TODO - DONE - make it look nicer. (sort of done, not good with making it look 'good', only 1 actually good css theme)
+	 * 
+	 * TODO - add a section for 'favourite reads'. links to either blogs/books/whatever really
+	 * 
+	 * TODO - add an 'archive' section. Shows blog entries in chunks based upon month/year.
 	 */
 	@Autowired
 	@Qualifier("bloggingServiceBean")
 	private BloggingService bloggingService;
 
-//	public BlogController()
-//	{
-//		ApplicationContext appContext = new ClassPathXmlApplicationContext(new String[]{"applicationContext.xml"});
-//		
-//		bloggingService = (BloggingService)appContext.getBean("bloggingServiceBean");
-//		
-//	}
 	@Autowired
 	private CommentValidator commentValidator;
 
@@ -84,17 +83,23 @@ public class BlogController {
 	}
 
 	@RequestMapping("/home")
-	public String showHome(Map<String, Object> map) {
+	public String showHome(@RequestParam(value="page",defaultValue="1") Integer pageNum,Map<String, Object> map) {
 		// TODO look more into spring regarding this map parameter
 		/*
 		 * Pulls in all the blog entries.
 		 */
-		List<UIBlogEntry> blogs = bloggingService.listBlogEntries(5);
-		map.put("blogEntries", blogs);
-//		map.put("blogEntries", bloggingService.listBlogEntries(5));
+		
+		/*
+		 * (pageNum*5)+1 --> will take on values ={1,6,11,16,...}
+		 * (pageNum*5)+5 --> will take on values ={5,10,15,20,...}
+		 */
+		PagingInfo pagingInfo = new PagingInfo(pageNum,5);
+		BlogListPageBean pageBean = bloggingService.listBlogEntries(pagingInfo);
+		map.put("blogEntries", pageBean.getBlogEntries());
 
-		map.put("tagList", bloggingService.listTagEntries());
+		map.put("tagList", pageBean.getSideTagEntries());
 		map.put("title", "Blog Listing");
+		map.put("paging",pageBean.getPagingInfo());
 
 		return "home.page";
 	}
@@ -134,20 +139,16 @@ public class BlogController {
 		bloggingService.addComment(comment);
 
 		return new ModelAndView("blog.page", "comment", new UIComment());
-//		ModelAndView redirect = new ModelAndView("redirect:blogView/"
-//				+ comment.getParentBlogId());
-
-//		return redirect;
 	}
 
 	@RequestMapping(value = "/viewTag", method = RequestMethod.GET)
 	public String showBlogMatchingTag(@RequestParam("tag") Integer tagID,
 			Map<String, Object> map) {
-		List<UIBlogEntry> blogs = bloggingService.getBlogsWithTag(tagID);
+		BlogListPageBean pageBean = bloggingService.getBlogsWithTag(tagID);
 		String tagText = bloggingService.getTagName(tagID);
-		map.put("blogEntries", blogs);
+		map.put("blogEntries", pageBean.getBlogEntries());
 		map.put("title", "Blogs for " + tagText);
-		map.put("tagList", bloggingService.listTagEntries());
+		map.put("tagList", pageBean.getSideTagEntries());
 
 		return "home.page";
 	}
