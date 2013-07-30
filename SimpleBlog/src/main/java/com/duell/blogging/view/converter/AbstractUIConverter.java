@@ -29,11 +29,8 @@ public abstract class AbstractUIConverter<T,U> implements UIConverter<T,U>
 		T uiObj;
 		for(U u:dbObjList)
 		{
-			uiObj = convertToUI(u);
-			if(decorator!=null)
-			{
-				uiObj=decorator.applyDecoration(uiObj);
-			}
+			uiObj = convertToUI(u,decorator);
+			
 			convertedCollection.add(uiObj);
 		}
 		return convertedCollection;
