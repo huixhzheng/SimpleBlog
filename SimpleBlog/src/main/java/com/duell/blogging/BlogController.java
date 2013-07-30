@@ -68,6 +68,7 @@ public class BlogController {
 	 * TODO - add a section for 'favourite reads'. links to either blogs/books/whatever really
 	 * 
 	 * TODO - add an 'archive' section. Shows blog entries in chunks based upon month/year.
+	 * TODO - change the Tags View link to something else. Like an about/a credit page
 	 */
 	@Autowired
 	@Qualifier("bloggingServiceBean")
