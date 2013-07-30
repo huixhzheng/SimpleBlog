@@ -1,4 +1,50 @@
 body {
-    background-color: white;
-    color: black;
+	background-color: #EBEBEB;
+	color: black;
+}
+
+.mainContent {
+	background-color: white;
+	color: black;
+}
+
+.header {
+	background-color: white;
+	color: black;
+}
+
+.mainNav,a.mainNav,.menuItem {
+	background-color: black;
+	color: white;
+	background-image: linear-gradient(bottom, rgb(28, 28, 28) 42%,
+		rgb(0, 0, 0) 74%);
+	background-image: -o-linear-gradient(bottom, rgb(28, 28, 28) 42%,
+		rgb(0, 0, 0) 74%);
+	background-image: -moz-linear-gradient(bottom, rgb(28, 28, 28) 42%,
+		rgb(0, 0, 0) 74%);
+	background-image: -webkit-linear-gradient(bottom, rgb(28, 28, 28) 42%,
+		rgb(0, 0, 0) 74%);
+	background-image: -ms-linear-gradient(bottom, rgb(28, 28, 28) 42%,
+		rgb(0, 0, 0) 74%);
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.42, rgb(28,
+		28, 28)), color-stop(0.74, rgb(0, 0, 0)));
+}
+
+
+.sideNav {
+	background-color: #EBEBEB;
+	color: black;
+}
+
+.individualTag {
+	color: #66CCFF;
+}
+
+.footer {
+	background-color: #EBEBEB;
+	color: black;
+}
+
+.blogTitle {
+	color: #66CCFF;
 }
