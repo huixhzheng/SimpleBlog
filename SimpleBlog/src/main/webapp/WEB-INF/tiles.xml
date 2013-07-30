@@ -9,9 +9,14 @@
 		<put-attribute name="title" value="" />
 		<put-attribute name="header" value="/WEB-INF/jsp/common/header.jsp" />
 		<put-attribute name="menu" value="/WEB-INF/jsp/common/menu.jsp" />
-		<put-attribute name="tagMenu" value="/WEB-INF/jsp/common/tagMenu.jsp" />
+		<put-attribute name="sideMenu" value="side.menu"/>
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/jsp/common/footer.jsp" />
+	</definition>
+	<definition name="side.menu" template="/WEB-INF/jsp/common/sideMenu.jsp">
+		<put-attribute name="tagsList" value="/WEB-INF/jsp/common/tagMenu.jsp" />
+		<put-attribute name="faveBooks" value="/WEB-INF/jsp/common/favouriteBooks.jsp"/>
+		<put-attribute name="archives" value="/WEB-INF/jsp/common/archives.jsp" />
 	</definition>
 
 	<!-- can override certain values if needed -->
