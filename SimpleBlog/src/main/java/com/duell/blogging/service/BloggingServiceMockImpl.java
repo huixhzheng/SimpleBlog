@@ -4,21 +4,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.duell.blogging.service.paging.PagingInfo;
 import com.duell.blogging.view.UIBlogEntry;
 import com.duell.blogging.view.UIComment;
 import com.duell.blogging.view.UITag;
+import com.duell.blogging.view.page.BlogListPageBean;
 
 public class BloggingServiceMockImpl implements BloggingService {
 
 	@Override
-	public List<UIBlogEntry> listBlogEntries() {
-		return listBlogEntries(5);
+	public BlogListPageBean listBlogEntries() {
+		return listBlogEntries(new PagingInfo());
 	}
 
 	@Override
-	public List<UIBlogEntry> listBlogEntries(Integer maxNum) {
+	public BlogListPageBean listBlogEntries(PagingInfo info) {
+		BlogListPageBean pageBean = new BlogListPageBean();
 		List<UIBlogEntry> blogList = new ArrayList<UIBlogEntry>();
-		for(int i=0;i<maxNum;i++)
+		
+		int start = (info.getStartEntry()!=-1)?info.getStartEntry():1;
+		int end =  (info.getEndEntry()!=-1)?info.getEndEntry():5;
+		
+		for(int i=start;i<end+1;i++)
 		{
 			UIBlogEntry fakeEntry = new UIBlogEntry();
 			fakeEntry.setAuthor("fake author");
@@ -27,11 +34,14 @@ public class BloggingServiceMockImpl implements BloggingService {
 			fakeEntry.setId(i);
 			fakeEntry.setPublish_date(new Date());
 			fakeEntry.setTags(new ArrayList<UITag>());
-			fakeEntry.setTitle("fake title");
+			fakeEntry.setTitle("fake title"+i);
 			fakeEntry.setAuthor_contact("fake@email.com");
 			blogList.add(fakeEntry);
 		}
-		return blogList;
+		pageBean.setBlogEntries(blogList);
+		pageBean.setPagingInfo(new PagingInfo(info.getPageNum()+1,5));
+		pageBean.setSideTagEntries(listTagEntries());
+		return pageBean;
 	}
 
 	@Override
@@ -55,9 +65,9 @@ public class BloggingServiceMockImpl implements BloggingService {
 	}
 
 	@Override
-	public List<UIBlogEntry> getBlogsWithTag(Integer tagID) {
+	public BlogListPageBean getBlogsWithTag(Integer tagID) {
 		
-		return listBlogEntries(5);
+		return listBlogEntries(new PagingInfo());
 	}
 
 	@Override
