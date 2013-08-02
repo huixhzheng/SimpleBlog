@@ -19,19 +19,29 @@
 		the components from package com.duell.spring3.controller and all its child 
 		packages. This will load our HelloWorldController class. -->
 	<context:component-scan base-package="com.duell" />
-
-
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<!-- have defined a bean viewResolver. This bean will resolve the view 
-			and add prefix string /WEB-INF/jsp/ and suffix .jsp to the view in ModelAndView. 
-			Note that in our HelloWorldController class, we have return a ModelAndView 
-			object with view name “hello”. This will be resolved to path /WEB-INF/jsp/hello.jsp. 
-			commenting out this one in favour of the TilesView -->
-		<!-- <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" 
-			/> <property name="prefix" value="/WEB-INF/jsp/" /> <property name="suffix" 
-			value=".jsp" /> -->
-
+	<!-- START: Content resolving beans  -->
+	<!-- Configured the ContentNegotiatingViewResolver to enable handling both json and standard jsp responses-->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="order" value="1" />
+		<property name="defaultContentType" value="application/json" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+			</map>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<!-- json view -->
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" >
+					<property name="contentType" value="application/json" />
+				</bean>
+								
+			</list>
+		</property>
+		<property name="ignoreAcceptHeader" value="true" />
+	</bean>
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="order" value="2" />
 		<!-- using this viewClass configuration changes from just looking for a 
 			configured class with a jsp extension e.x. ModelAndView("contact", "command", 
 			new Contact()); would looks for the configuration for 'contact', previous 
@@ -43,6 +53,8 @@
 			</value>
 		</property>
 	</bean>
+	<!-- END: Content resolving beans -->
+	
 
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
