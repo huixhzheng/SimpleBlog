@@ -7,6 +7,10 @@ public class UIComment {
 	private String comment;
 	private Integer parentBlogId;
 	
+	public UIComment()
+	{
+		
+	}
 	public String getCommenterName() {
 		return commenterName;
 	}
