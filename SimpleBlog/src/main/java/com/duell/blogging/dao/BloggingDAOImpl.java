@@ -1,8 +1,9 @@
 package com.duell.blogging.dao;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -33,20 +34,24 @@ public class BloggingDAOImpl implements BloggingDAO {
 	//
 	// }
 	@Override
-	public Collection<BlogEntry> listBlogEntries(PagingInfo pagingInfo) {
+	public Map<String,Object> listBlogEntries(PagingInfo pagingInfo) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
 		int start = 0;
 		int end = 0;
 
 		List<BlogEntry> list;
+		
 		// Use the Hibernate class name 'BlogEntry' and not the SQL table name
 		// of blog_entries
 
-//		String strRangeQuery = "from BlogEntry be order by be.id where (be.id <= :endPoint) and (be.id >= :startPoint)";
-
+		
 		String strQuery = "from BlogEntry be order by be.id desc";
 		Query queryObj = null;
 		Session session = sessionFactory.getCurrentSession();
 		// do range
+		
+		
 		if (pagingInfo.getPageNum() != -1
 				&& pagingInfo.getEntriesPerPage() != -1) {
 			/*
@@ -87,6 +92,14 @@ public class BloggingDAOImpl implements BloggingDAO {
 			start = (latestEntryId - firstEntry) < 0 ? 0 : latestEntryId
 					- firstEntry;
 
+			if(start==0) //we've gone through it all
+			{
+				pagingInfo.setHasNext(false);
+			}
+			else
+			{
+				pagingInfo.setHasNext(true);
+			}
 			// TODO add some indicator that says if there are or aren't any more
 			// items left.
 
@@ -99,26 +112,22 @@ public class BloggingDAOImpl implements BloggingDAO {
 			crit = crit.add(Restrictions.gt("id", start));
 			crit = crit.addOrder(Order.desc("id"));
 			list = crit.list();
+			
+			
 			// queryObj =
 			// sessionFactory.getCurrentSession().createQuery(strRangeQuery);
 			// queryObj = queryObj.setParameter("endPoint",
 			// end).setParameter("startPoint", start);
-		} else // do all with limit
+		} else // get all
 		{
 			queryObj = sessionFactory.getCurrentSession().createQuery(strQuery);
-			queryObj.setMaxResults(5);
 			list = queryObj.list();
+			pagingInfo.setHasNext(false);
 		}
-
-		// Query queryObj =
-		// sessionFactory.getCurrentSession().createQuery(strQuery);
-
-		//
-		// if(maxNum>0)
-		// {
-		// queryObj = queryObj.setMaxResults(maxNum);
-		// }
-		return list;
+		
+		map.put("blogList", list);
+		map.put("paging", pagingInfo);
+		return map;
 	}
 
 	@Override
