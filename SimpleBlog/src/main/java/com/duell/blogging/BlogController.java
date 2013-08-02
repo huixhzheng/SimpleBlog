@@ -1,6 +1,6 @@
 package com.duell.blogging;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -22,10 +22,12 @@ import com.duell.blogging.service.BloggingService;
 import com.duell.blogging.service.paging.PagingInfo;
 import com.duell.blogging.view.UIBlogEntry;
 import com.duell.blogging.view.UIComment;
+import com.duell.blogging.view.UITag;
 import com.duell.blogging.view.page.BlogListPageBean;
 import com.duell.blogging.view.validator.CommentValidator;
 
 @Controller
+@RequestMapping("/blog")
 public class BlogController {
 
 	/*
@@ -68,7 +70,6 @@ public class BlogController {
 	 * TODO - add a section for 'favourite reads'. links to either blogs/books/whatever really
 	 * 
 	 * TODO - add an 'archive' section. Shows blog entries in chunks based upon month/year.
-	 * TODO - change the Tags View link to something else. Like an about/a credit page
 	 */
 	@Autowired
 	@Qualifier("bloggingServiceBean")
@@ -85,14 +86,8 @@ public class BlogController {
 
 	@RequestMapping("/home")
 	public String showHome(@RequestParam(value="page",defaultValue="1") Integer pageNum,Map<String, Object> map) {
-		// TODO look more into spring regarding this map parameter
 		/*
 		 * Pulls in all the blog entries.
-		 */
-		
-		/*
-		 * (pageNum*5)+1 --> will take on values ={1,6,11,16,...}
-		 * (pageNum*5)+5 --> will take on values ={5,10,15,20,...}
 		 */
 		PagingInfo pagingInfo = new PagingInfo(pageNum,5);
 		BlogListPageBean pageBean = bloggingService.listBlogEntries(pagingInfo);
@@ -105,7 +100,23 @@ public class BlogController {
 		return "home.page";
 	}
 
-	@RequestMapping("/blogView/{blogId}")
+	@RequestMapping(method = RequestMethod.GET)
+	public String listAllBlogs(Map<String,Object> map)
+	{
+		PagingInfo pageInfo = new PagingInfo(-1,-1);
+		BlogListPageBean pageBean = bloggingService.listBlogEntries(pageInfo);
+		
+		map.put("blogEntries", pageBean.getBlogEntries());
+
+//		map.put("tagList", pageBean.getSideTagEntries());
+//		map.put("title", "Blog Listing");
+//		map.put("paging",pageBean.getPagingInfo());
+		
+		return "home.page";
+		
+	}
+	
+	@RequestMapping(value="/{blogId}",method=RequestMethod.GET)
 	public ModelAndView showBlog(@PathVariable("blogId") Integer blogId,
 			Map<String, Object> map) {
 
@@ -124,26 +135,42 @@ public class BlogController {
 		return new ModelAndView("blog.page", "comment", new UIComment());
 	}
 
-	@RequestMapping(value = "/addComment", method = RequestMethod.POST)
-	public ModelAndView addComment(
+	@RequestMapping(value = "/{blogId}", method = RequestMethod.POST)
+	public ModelAndView addComment(@PathVariable("blogId") Integer blogId,			
 			@ModelAttribute("comment") @Valid UIComment comment,
-			BindingResult result, Map<String, Object> map) {
-
+			BindingResult result, Map<String, Object> map)
+	{
+		/*
+		 * Add comment first if there are no errors. This will save the 
+		 * comment to the DB before retreiving the full page content.
+		 */
+		if(!result.hasErrors())
+		{
+			comment.setParentBlogId(blogId);
+			bloggingService.addComment(comment);	
+		}
+		/*
+		 * Pull the page content that has to be displayed regardless
+		 * of error or no error.
+		 */
 		UIBlogEntry entry = bloggingService.getBlogById(comment
 				.getParentBlogId());
 		map.put("blogEntry", entry);
 		map.put("tagList", bloggingService.listTagEntries());
 
-		if (result.hasErrors()) {
+		
+		if (result.hasErrors()) 
+		{
+			//TODO figure out the proper way to return errors for json + spring
 			return new ModelAndView("blog.page", "comment", comment);
 		}
-		bloggingService.addComment(comment);
 
 		return new ModelAndView("blog.page", "comment", new UIComment());
 	}
 
-	@RequestMapping(value = "/viewTag", method = RequestMethod.GET)
-	public String showBlogMatchingTag(@RequestParam("tag") Integer tagID,
+
+	@RequestMapping(value = "/tags/{tagId}/blogs", method = RequestMethod.GET)
+	public String showBlogMatchingTag(@PathVariable("tagId") Integer tagID,
 			Map<String, Object> map) {
 		BlogListPageBean pageBean = bloggingService.getBlogsWithTag(tagID);
 		String tagText = bloggingService.getTagName(tagID);
@@ -152,5 +179,13 @@ public class BlogController {
 		map.put("tagList", pageBean.getSideTagEntries());
 
 		return "home.page";
+	}
+	@RequestMapping(value="/tags",method=RequestMethod.GET)
+	public ModelAndView getTags(Map<String,Object> map)
+	{
+		Collection<UITag> tags = bloggingService.listTagEntries();
+		
+		map.put("tags", tags);
+		return new ModelAndView("tags.page");
 	}
 }
