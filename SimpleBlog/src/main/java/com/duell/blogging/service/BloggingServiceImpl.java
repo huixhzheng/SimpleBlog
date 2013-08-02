@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +21,6 @@ import com.duell.blogging.view.UIBlogEntry;
 import com.duell.blogging.view.UIComment;
 import com.duell.blogging.view.UITag;
 import com.duell.blogging.view.converter.UIConverter;
-import com.duell.blogging.view.converter.blogentry.SimpleUIBlogEntryConverter;
 import com.duell.blogging.view.decorator.UIDecorator;
 import com.duell.blogging.view.page.BlogListPageBean;
 
@@ -57,21 +57,26 @@ public class BloggingServiceImpl implements BloggingService {
 		 * Convert the objects coming back
 		 */
 		BlogListPageBean blogListPageBean = new BlogListPageBean();
-		Collection<BlogEntry> blogEntries = bloggingDAO.listBlogEntries(pageInfo); 
+		Map<String,Object> map = bloggingDAO.listBlogEntries(pageInfo);
+		
+		Collection<BlogEntry> blogEntries =  (Collection<BlogEntry>)map.get("blogList");
+		pageInfo = (PagingInfo)map.get("paging");
+		
 	
 		List<UIBlogEntry> uiBlogEntries = null ;
 		uiBlogEntries = new ArrayList<UIBlogEntry>(blogConverter.convertToUI(blogEntries, blogDecorator));
-	
-		Integer numBlogs = bloggingDAO.getBlogCount();
-		if(pageInfo.getPageNum() * pageInfo.getEntriesPerPage() < numBlogs)
-		{
-			pageInfo.setHasNext(true);
-		}
-		else
-		{
-			pageInfo.setHasNext(false);
-		}
-		
+//	
+//		Integer numBlogs = bloggingDAO.getBlogCount();
+//		
+//		if(pageInfo.getPageNum() * pageInfo.getEntriesPerPage() < numBlogs)
+//		{
+//			pageInfo.setHasNext(true);
+//		}
+//		else
+//		{
+//			pageInfo.setHasNext(false);
+//		}
+//		
 //		int startEntry = uiBlogEntries.get(0).getId();
 //		int endEntry = uiBlogEntries.get(uiBlogEntries.size()-1).getId();
 //		int pageNum = pageInfo.getPageNum();
