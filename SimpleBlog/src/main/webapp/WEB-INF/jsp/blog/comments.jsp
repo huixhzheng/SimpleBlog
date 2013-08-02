@@ -39,7 +39,7 @@
 	</tr>
 	<%-- --%>
 	<tr>
-		<td><form:form modelAttribute="comment" method="post" action="/SimpleBlog/addComment.html">
+		<td><form:form modelAttribute="comment" method="post" action="/SimpleBlog/blog/${blogEntry.id}.html">
 				<table border="1" id="comments">
 					<tr>
 						<td><form:label path="commenterName">Name</form:label> <form:input
