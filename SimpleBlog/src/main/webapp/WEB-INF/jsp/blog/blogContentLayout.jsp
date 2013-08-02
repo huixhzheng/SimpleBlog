@@ -1,6 +1,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
+
 <table border="2" cellpadding="2" cellspacing="2" align="center">
 	<tr>
 		<td height="250"><tiles:insertAttribute name="blog.content.entry" /></td>

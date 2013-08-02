@@ -21,6 +21,7 @@
 
 	<bean id="uiBlogConverter"
 		class="com.duell.blogging.view.converter.blogentry.SimpleUIBlogEntryConverter" />
+		
 	<!-- <bean id="uiBlog" class="com.duell.blogging.view.UIBlogEntry" /> -->
 
 	<!-- <bean id="bloggingServiceBean" class="com.duell.blogging.service.BloggingServiceImpl" 

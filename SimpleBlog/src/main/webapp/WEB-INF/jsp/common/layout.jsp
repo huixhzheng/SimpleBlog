@@ -44,26 +44,5 @@
 			<tiles:insertAttribute name="footer" />
 		</div>
 	</div>
-
-
-
-
-	<!-- 	<table border="2" cellpadding="2" cellspacing="2" align="center"> -->
-	<!-- 		<tr> -->
-	<%-- 			<td height="30" colspan="2"><tiles:insertAttribute name="header" /></td> --%>
-	<!-- 		</tr> -->
-	<!-- 		<tr> -->
-	<%-- 			<td colspan="2"><tiles:insertAttribute name="menu" /></td> --%>
-	<!-- 		</tr> -->
-	<!-- 		<tr> -->
-	<%-- 			<td width="350"><tiles:insertAttribute name="body" /></td> --%>
-	<%-- 			<td width="250"><tiles:insertAttribute name="tagMenu" /></td> --%>
-	<!-- 		</tr> -->
-	<!-- 		<tr> -->
-	<%-- 			<td height="30" colspan="3"><tiles:insertAttribute name="footer" /> --%>
-	<!-- 			</td> -->
-	<!-- 		</tr> -->
-	<!-- 	</table> -->
-
 </body>
 </html>
