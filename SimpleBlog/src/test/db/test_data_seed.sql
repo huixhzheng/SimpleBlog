@@ -59,6 +59,12 @@ insert into blog_entries (title,content,author,author_contact,publish_date)
 	'Matt Duell','mkduell@gmail.com',
 	STR_TO_DATE('15-07-2013','%d-%m-%Y'));
 	
+	insert into blog_entries (title,content,author,author_contact,publish_date) 
+	values('Blog Number ELEVEN!',
+	'This is my Eleventh blog entry, lots of words. lots lots lots lots lots lots. How many? SO many. I like words. Do you like words? Trying to go over the display limit on the first page so that it is cut off early but will show the full text on the drill down. no tags',
+	'Matt Duell','mkduell@gmail.com',
+	STR_TO_DATE('15-07-2013','%d-%m-%Y'));
+	
 insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post_date) 
 	values('cool blogz yo',
 	'blog commenter 1',
@@ -72,8 +78,8 @@ insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post
 	
 	insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post_date) 
 	values ('om nom nom','george','mkduell@gmail.com',1,STR_TO_DATE('15-07-2013','%d-%m-%Y'));
-	insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post_date) 
-	
+
+	insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post_date) 	
 	values ('poop','poopy mc poopies','mkduell@gmail.com',1,STR_TO_DATE('15-07-2013','%d-%m-%Y'));
 	
 insert into tags (text) values('java');
