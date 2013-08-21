@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Date;
 
 import junit.framework.TestCase;
@@ -27,9 +26,11 @@ public class TestAspect extends TestCase {
 		UIBlogEntry uiBlogEntry = new UIBlogEntry();
 		UIConverter<UIBlogEntry, BlogEntry> converter = (UIConverter<UIBlogEntry, BlogEntry>) appContext
 				.getBean("uiBlogConverter");
-		UIDecorator<UIBlogEntry> decorator = new ShortenDisplayContentDecorator(
-				130);
+		UIDecorator<UIBlogEntry> decorator = new ShortenDisplayContentDecorator();
+		((ShortenDisplayContentDecorator)decorator).setNumChars(130);
 		
 		uiBlogEntry = converter.convertToUI(blogEntry, decorator);
+		
+		
 	}
 }
