@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,11 +48,14 @@ public class BloggingServiceImpl implements BloggingService {
 	private TagsDAO tagsDAO;
 	
 	@Transactional
+	@Cacheable("blogList")
 	public BlogListPageBean listBlogEntries() {
 
 		return listBlogEntries(new PagingInfo());
 	}
+	
 	@Transactional
+	@Cacheable(value={"blogListPage"})
 	public BlogListPageBean listBlogEntries(PagingInfo pageInfo)
 	{
 		/*
@@ -65,37 +70,10 @@ public class BloggingServiceImpl implements BloggingService {
 	
 		List<UIBlogEntry> uiBlogEntries = null ;
 		uiBlogEntries = new ArrayList<UIBlogEntry>(blogConverter.convertToUI(blogEntries, blogDecorator));
-//	
-//		Integer numBlogs = bloggingDAO.getBlogCount();
-//		
-//		if(pageInfo.getPageNum() * pageInfo.getEntriesPerPage() < numBlogs)
-//		{
-//			pageInfo.setHasNext(true);
-//		}
-//		else
-//		{
-//			pageInfo.setHasNext(false);
-//		}
-//		
-//		int startEntry = uiBlogEntries.get(0).getId();
-//		int endEntry = uiBlogEntries.get(uiBlogEntries.size()-1).getId();
-//		int pageNum = pageInfo.getPageNum();
-//		if(startEntry > (pageInfo.getPageNum() * pageInfo.getEntriesPerPage()))
-//		{
-//			pageNum++;
-//		}
-//		else
-//		{
-//			pageNum--;
-//		}
-//		
-		
+
 		
 		
 		blogListPageBean.setBlogEntries(uiBlogEntries);
-//		PagingInfo pageInfo2 = new PagingInfo(pageNum,pageInfo.getEntriesPerPage());
-//		pageInfo2.setHasNext(true);
-//		blogListPageBean.setPagingInfo(pageInfo2);
 		blogListPageBean.setPagingInfo(pageInfo);
 		blogListPageBean.setSideTagEntries(listTagEntries());
 		
@@ -103,6 +81,7 @@ public class BloggingServiceImpl implements BloggingService {
 	}
 
 	@Transactional
+	@Cacheable(value="blogById")
 	public UIBlogEntry getBlogById(Integer id)
 	{
 		BlogEntry entry = bloggingDAO.getBlogById(id);
@@ -112,7 +91,9 @@ public class BloggingServiceImpl implements BloggingService {
 		
 		return uiBlogEntry;
 	}
+	
 	@Transactional
+	@CacheEvict(value={"blogList","blogListPage"}, allEntries=true)
 	public boolean addComment(UIComment comment)
 	{
 		CommentEntry commentEntry =  new CommentEntry();
@@ -126,6 +107,7 @@ public class BloggingServiceImpl implements BloggingService {
 	}
 	
 	@Transactional
+	@Cacheable("tagList")
 	public Collection<UITag> listTagEntries()
 	{
 		Collection<TagEntry> dbTags = tagsDAO.getAllTags();
@@ -134,6 +116,7 @@ public class BloggingServiceImpl implements BloggingService {
 		return uiTags;
 	}
 	@Transactional 
+	@Cacheable("tagSingle")
 	public String getTagName(Integer tagID)
 	{
 		Collection<UITag> tags = listTagEntries();
@@ -149,6 +132,7 @@ public class BloggingServiceImpl implements BloggingService {
 	}
 	
 	@Transactional
+	@Cacheable("blogByTag")
 	public BlogListPageBean getBlogsWithTag(Integer tagID)
 	{
 		Collection<BlogEntry> dbBlogEntries = bloggingDAO.getBlogsByTag(tagID);

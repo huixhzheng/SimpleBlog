@@ -4,21 +4,45 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 	http://www.springframework.org/schema/tx 
 	http://www.springframework.org/schema/tx/spring-tx.xsd
 	http://www.springframework.org/schema/mvc 
-	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd
 	http://www.springframework.org/schema/aop
-	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	http://www.springframework.org/schema/cache 
+	http://www.springframework.org/schema/cache/spring-cache-3.2.xsd"
+	>
 
 	<!-- The tag <context:component-scan>. This will allow Spring to load all 
 		the components from package com.duell.spring3.controller and all its child 
 		packages. This will load our HelloWorldController class. -->
 	<context:component-scan base-package="com.duell" />
+	
+	<!-- Enables the caching through annotations -->
+  	<cache:annotation-driven />
+  	
+  	
+  	<!-- START: Caching -->
+  	<!-- Generic cache manager based on the JDK ConcurrentMap -->
+  	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+    	<property name="caches">
+      		<set>
+        		<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="blogListPage" />
+        		<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="blogList" />
+        		<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="blogById" />
+        		<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="tagList" />
+        		<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="tagSingle" />
+        		<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="blogByTag" />
+      		</set>
+    	</property>
+  	</bean>
+  
 	<!-- START: Content resolving beans  -->
 	<!-- Configured the ContentNegotiatingViewResolver to enable handling both json and standard jsp responses-->
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
