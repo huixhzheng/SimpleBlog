@@ -2,6 +2,7 @@ drop table tag_blog_reference;
 drop table tags;
 drop table comments;
 drop table blog_entries;
+drop table favourite_reads;
 
 create table blog_entries (
 	id INT NOT NULL AUTO_INCREMENT,
