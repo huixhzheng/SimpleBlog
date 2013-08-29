@@ -23,7 +23,6 @@ public class PagingInfo {
 		return pageNum+1;
 	}
 	
-	
 	public boolean getHasNext() {
 		return hasNext;
 	}
@@ -38,7 +37,6 @@ public class PagingInfo {
 		this.pageNum = page;
 		this.entriesPerPage = entriesPerPage;
 	}
-	
 	
 	public int getStartEntry() {
 		return startEntry;
@@ -64,6 +62,38 @@ public class PagingInfo {
 	public void setEntriesPerPage(int entriesPerPage) {
 		this.entriesPerPage = entriesPerPage;
 	}	
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + endEntry;
+		result = prime * result + entriesPerPage;
+		result = prime * result + (hasNext ? 1231 : 1237);
+		result = prime * result + pageNum;
+		result = prime * result + startEntry;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PagingInfo other = (PagingInfo) obj;
+		if (endEntry != other.endEntry)
+			return false;
+		if (entriesPerPage != other.entriesPerPage)
+			return false;
+		if (hasNext != other.hasNext)
+			return false;
+		if (pageNum != other.pageNum)
+			return false;
+		if (startEntry != other.startEntry)
+			return false;
+		return true;
+	}	
 }
 
