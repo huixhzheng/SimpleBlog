@@ -59,28 +59,15 @@ insert into blog_entries (title,content,author,author_contact,publish_date)
 	'Matt Duell','mkduell@gmail.com',
 	STR_TO_DATE('15-07-2013','%d-%m-%Y'));
 	
-	insert into blog_entries (title,content,author,author_contact,publish_date) 
-	values('Blog Number ELEVEN!',
-	'This is my Eleventh blog entry, lots of words. lots lots lots lots lots lots. How many? SO many. I like words. Do you like words? Trying to go over the display limit on the first page so that it is cut off early but will show the full text on the drill down. no tags',
-	'Matt Duell','mkduell@gmail.com',
-	STR_TO_DATE('15-07-2013','%d-%m-%Y'));
+	insert into blog_entries (title,content,author,author_contact,publish_date) values('Blog Number ELEVEN!','This is my Eleventh blog entry, lots of words. lots lots lots lots lots lots. How many? SO many. I like words. Do you like words? Trying to go over the display limit on the first page so that it is cut off early but will show the full text on the drill down. no tags', 'Matt Duell','mkduell@gmail.com', STR_TO_DATE('15-07-2013','%d-%m-%Y'));
 	
-insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post_date) 
-	values('cool blogz yo',
-	'blog commenter 1',
-	'mkduell@gmail.com',
-	1,
-	STR_TO_DATE('15-07-2013','%d-%m-%Y'));
+	insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post_date) values('cool blogz yo','blog commenter 1','mkduell@gmail.com',1,STR_TO_DATE('15-07-2013','%d-%m-%Y'));
 	
+	insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post_date) values ('I like kitties','the kitty','mkduell@gmail.com',1,STR_TO_DATE('15-07-2013','%d-%m-%Y'));
 	
-	insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post_date) 
-	values ('I like kitties','the kitty','mkduell@gmail.com',1,STR_TO_DATE('15-07-2013','%d-%m-%Y'));
-	
-	insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post_date) 
-	values ('om nom nom','george','mkduell@gmail.com',1,STR_TO_DATE('15-07-2013','%d-%m-%Y'));
+	insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post_date) values ('om nom nom','george','mkduell@gmail.com',1,STR_TO_DATE('15-07-2013','%d-%m-%Y'));
 
-	insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post_date) 	
-	values ('poop','poopy mc poopies','mkduell@gmail.com',1,STR_TO_DATE('15-07-2013','%d-%m-%Y'));
+	insert into comments (comment,commenter_name,commenter_email,parent_blog_id,post_date) values ('poop','poopy mc poopies','mkduell@gmail.com',1,STR_TO_DATE('15-07-2013','%d-%m-%Y'));
 	
 insert into tags (text) values('java');
 insert into tags (text) values('mvc');
@@ -89,5 +76,11 @@ insert into tags (text) values('blogs');
 insert into tags (text) values('spring');
 insert into tags (text) values('hibernate');
 
-insert into tag_blog_reference(tags_id,blog_id) values(1,1),(2,1),(4,1),(3,2),(1,2),(6,1),(6,2);
+insert into tag_blog_reference(tags_id,blog_id) values(1,1);
+insert into tag_blog_reference(tags_id,blog_id) values(2,1);
+insert into tag_blog_reference(tags_id,blog_id) values(4,1);
+insert into tag_blog_reference(tags_id,blog_id) values(3,2);
+insert into tag_blog_reference(tags_id,blog_id) values(1,2);
+insert into tag_blog_reference(tags_id,blog_id) values(6,1);
+insert into tag_blog_reference(tags_id,blog_id) values(6,2);
 
