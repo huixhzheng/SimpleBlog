@@ -93,7 +93,7 @@ public class BloggingServiceImpl implements BloggingService {
 	}
 	
 	@Transactional
-	@CacheEvict(value={"blogList","blogListPage"}, allEntries=true)
+	@CacheEvict(value={"blogById"}, allEntries=true)
 	public boolean addComment(UIComment comment)
 	{
 		CommentEntry commentEntry =  new CommentEntry();
