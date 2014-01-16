@@ -58,6 +58,10 @@ insert into blog_entries (title,content,author,author_contact,publish_date)
 	'This is my TENTH blog entry, only a few words, no tags',
 	'Matt Duell','mkduell@gmail.com',
 	STR_TO_DATE('15-07-2013','%d-%m-%Y'));
+
+	insert into blog_entries (title,content,author,author_contact,publish_date) values('BLABLABLA Engry','LA BLA BLA BLA BLA om nom nom to the nom nom.','Matt Duell','mkduell@gmail.com',STR_TO_DATE('15-01-2013','%d-%m-%Y'));
+	insert into blog_entries (title,content,author,author_contact,publish_date) values('BLABLABLA Engry','LA BLA BLA BLA BLA om nom nom to the nom nom.','Matt Duell','mkduell@gmail.com',STR_TO_DATE('15-02-2013','%d-%m-%Y'));
+	insert into blog_entries (title,content,author,author_contact,publish_date) values('BLABLABLA Engry','LA BLA BLA BLA BLA om nom nom to the nom nom.','Matt Duell','mkduell@gmail.com',STR_TO_DATE('15-03-2013','%d-%m-%Y'));
 	
 	insert into blog_entries (title,content,author,author_contact,publish_date) values('Blog Number ELEVEN!','This is my Eleventh blog entry, lots of words. lots lots lots lots lots lots. How many? SO many. I like words. Do you like words? Trying to go over the display limit on the first page so that it is cut off early but will show the full text on the drill down. no tags', 'Matt Duell','mkduell@gmail.com', STR_TO_DATE('15-07-2013','%d-%m-%Y'));
 	
