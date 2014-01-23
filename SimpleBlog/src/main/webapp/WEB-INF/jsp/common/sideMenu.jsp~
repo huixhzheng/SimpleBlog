@@ -9,13 +9,13 @@
 	</div>
 	<br />
 	
-	<a href="#" id="ShowHideFaveBooks" class="listHeader">[-]Fave Books</a>	
+	<a href="#" id="ShowHideFaveBooks" class="listHeader"> -Fave Books</a>	
 	<div id="FaveBooksContainer" >
 		<tiles:insertAttribute name="faveBooks" />
 	</div>
 	<br />
 	
-	<a href="#" id="ShowHideArchives" class="listHeader">[-]Archives</a>	
+	<a href="#" id="ShowHideArchives" class="listHeader"> -Archives</a>	
 	<div id="ArchiveContainer" >
 		<tiles:insertAttribute name="archives" />
 	</div>

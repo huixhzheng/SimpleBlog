@@ -4,7 +4,13 @@
 <%
 	// hooks into the defined content in the appropriate messages property file
 %>
+<ul id="nav">
+	<li><a href="/SimpleBlog/blog/home.html" class="mainNav">Home</a></li>
+	<li><a href="/SimpleBlog/about.html" class="mainNav">About</a></li>
+</ul>
 
-<a href="/SimpleBlog/blog/home.html" class="menuItem"">Home</a>
+<!--<a href="/SimpleBlog/blog/home.html" class="menuItem">Home</a>
 &nbsp;
 <a href="/SimpleBlog/about.html" class="menuItem">About</a>
+
+-->

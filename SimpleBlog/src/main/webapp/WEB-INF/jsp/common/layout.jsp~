@@ -61,7 +61,7 @@
 			function runEffect(effectTarget)
 			{
 				//var effect="blind";
-				var effect = "bounce";				
+				var effect = "explode";				
 				$(effectTarget).toggle(effect);
 			
 			}
