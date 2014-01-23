@@ -2,7 +2,10 @@ package com.duell.blogging;
 
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 import javax.validation.Valid;
 
@@ -133,7 +136,7 @@ public class BlogController
 
 		return "home.page";
 	}
-
+/*
 	@RequestMapping(method = RequestMethod.GET)
 	public String listAllBlogs(Map<String, Object> map)
 	{
@@ -148,6 +151,56 @@ public class BlogController
 
 		return "home.page";
 
+	}
+	*/
+	/**
+	 * 
+	 * @param month
+	 * @param pageNum
+	 * @param filterOut - Format = jsonElementNameToNotReturn+otherJsonElementToNotReturn+... and so on
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	public String listBlogsWithFilters(
+			@RequestParam(value="month",defaultValue="-1") Integer month,
+			@RequestParam(value="page",defaultValue="0")Integer pageNum,
+			@RequestParam(value="filterout",defaultValue="")String filterOut,
+			Map<String,Object>map)
+	{
+		PagingInfo pagingInfo =null;
+		if (pageNum == 0)
+		{
+			pagingInfo= new PagingInfo(-1,-1);
+		}
+		else
+		{
+			pagingInfo = new PagingInfo(pageNum,5);
+		}
+		
+		BlogListPageBean pageBean = bloggingService.listBlogEntries(pagingInfo);
+		
+		Set<String> filteredItems = new HashSet<>();
+		//Figure out if there is anything that has to be filtered out
+		if(filterOut !=null && !filterOut.isEmpty())
+		{
+			StringTokenizer st = new StringTokenizer(filterOut);
+			while(st.hasMoreTokens())
+			{
+				filteredItems.add(st.nextToken());
+			}
+		}
+		
+		if(!filteredItems.contains("blogEntries"))
+		{
+			map.put("blogEntries", pageBean.getBlogEntries());
+		}
+		if(!filteredItems.contains("paging"))
+		{
+			map.put("paging", pageBean.getPagingInfo());
+		}
+		
+		return "home.page";
 	}
 
 	@RequestMapping(value = "/{blogId}", method = RequestMethod.GET)
