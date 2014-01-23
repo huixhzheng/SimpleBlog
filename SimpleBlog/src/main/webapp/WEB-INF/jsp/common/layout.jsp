@@ -13,7 +13,8 @@
 %>
 <link rel="stylesheet" href="/SimpleBlog/themes/common.css" type="text/css" />
 <link rel="stylesheet" href="/SimpleBlog/<spring:theme code='css'/>" type="text/css" />
-<script src="/SimpleBlog/js/MyJs.js" type="text/javascript" /></script>
+<script src="/SimpleBlog/js/MyJs.js" type="text/javascript" ></script>
+<script src="/SimpleBlog/js/jquery-1.10.2.min.js" type="text/javascript" ></script>
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
 </head>
