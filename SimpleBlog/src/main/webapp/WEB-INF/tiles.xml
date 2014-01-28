@@ -36,7 +36,8 @@
 		<put-attribute name="home.page.content" value="/WEB-INF/jsp/home/content.jsp" />
 	</definition>
 	
-
+	<definition name="comments.page" template="/WEB-INF/jsp/blog/comments.jsp" />
+	
 	<!-- An individual blog entry -->	
 	<definition name="blog.page" extends="base.definition">
 		<put-attribute name="title" value="Blog Page" />

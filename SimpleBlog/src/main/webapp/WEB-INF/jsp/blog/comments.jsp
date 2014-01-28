@@ -5,10 +5,11 @@
 	<%
 		//should never be empty.. but whatever
 	%>
-	<c:if test="${!empty blogEntry}">
-		<c:if test="${!empty blogEntry.comments}">
+	<!--<c:if test="${!empty blogEntry}">-->
+		<c:if test="${!empty commentList}">
+			<p>comments!</p>
 			<tr>
-				<td><c:forEach items="${blogEntry.comments}" var="comment">
+				<td><c:forEach items="${commentList}" var="comment">
 						<table border="1"
 							class="commentIndividual">
 							<tr>
@@ -21,14 +22,14 @@
 					</c:forEach></td>
 			</tr>
 		</c:if>
-		<c:if test="${empty blogEntry.comments}">
+		<c:if test="${empty commentList}">
 			<tr>
 				<td>
 					<p>No comments</p>
 				</td>
 			</tr>
 		</c:if>
-	</c:if>
+	<!--</c:if>-->
 	<tr>
 		<td><span class="commentControls"
 			onclick="showElement('comments')">Reply</span></td>
