@@ -2,7 +2,6 @@ package com.duell.blogging.view;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 
 public class UIBlogEntry {
 	
@@ -13,6 +12,7 @@ public class UIBlogEntry {
 		this.id=that.id;
 		this.title=that.title;
 		this.content=that.content;
+		this.content2=that.content2;
 		this.author=that.author;
 		this.author_contact=that.author_contact;
 		this.publish_date=that.publish_date;
@@ -23,6 +23,8 @@ public class UIBlogEntry {
 	private String title;
 
 	private String content;
+	
+	private String content2;
 	
 	private String author;
 	
@@ -58,6 +60,16 @@ public class UIBlogEntry {
 		this.content = content;
 	}
 
+	
+	public String getContent2()
+	{
+		return content2;
+	}
+	
+	public void setContent2(String content2)
+	{
+		this.content2 = content2;
+	}
 	public String getAuthor() {
 		return author;
 	}
