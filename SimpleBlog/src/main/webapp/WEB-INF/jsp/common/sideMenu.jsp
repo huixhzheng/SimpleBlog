@@ -3,19 +3,19 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <div id="SideNav" class="sideMenuContents">
 	
-	<a href="#" id="ShowHideTagList" class="listHeader">[-]Tag List</a>	
+	<a href="#ShowHideTagList" id="ShowHideTagList" class="listHeader" onClick="toggleSideList('#TagListContainer','#ShowHideTagList')">[-]Tag List</a>
 	<div id="TagListContainer" style="display: block;">
 		<tiles:insertAttribute name="tagsList" />
 	</div>
 	<br />
 	
-	<a href="#" id="ShowHideFaveBooks" class="listHeader">[-]Fave Books</a>	
+	<a href="#ShowHideFaveBooks" id="ShowHideFaveBooks" class="listHeader" onClick="toggleSideList('#FaveBooksContainer','#ShowHideFaveBooks')">[-]Fave Books</a>
 	<div id="FaveBooksContainer" >
 		<tiles:insertAttribute name="faveBooks" />
 	</div>
 	<br />
 	
-	<a href="#" id="ShowHideArchives" class="listHeader">[-]Archives</a>	
+	<a href="#ShowHideArchives" id="ShowHideArchives" class="listHeader" onClick="toggleSideList('#ArchiveContainer','#ShowHideArchives')">[-]Archives</a>
 	<div id="ArchiveContainer" >
 		<tiles:insertAttribute name="archives" />
 	</div>

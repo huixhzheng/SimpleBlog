@@ -27,7 +27,7 @@
 	}
 </style>
 </head>
-<body onload="hideElement('comments');">
+<body >
 
 	<div class="allContent">
 		
@@ -53,80 +53,6 @@
 			<tiles:insertAttribute name="footer" />
 		</div>
 	</div>
-	<script>
 	
-	$(
-		function()
-		{
-			function runEffect(effectTarget)
-			{
-				//var effect="blind";
-				var effect = "bounce";				
-				$(effectTarget).toggle(effect);
-			
-			}
-			function changeText(isExpanded,targetElement, expandedText,shrinkedText)
-			{
-				console.log("isExpanded = "+isExpanded);
-				console.log("targetElement = "+targetElement);
-				console.log("expandedText = "+expandedText);
-				console.log("shrinkedText = "+shrinkedText);
-
-				if(isExpanded===true)
-				{
-					$(targetElement).text(expandedText);
-				}
-				else
-				{
-					$(targetElement).text(shrinkedText);
-				}
-			}
-			
-			$("#ShowHideTagList").click(
-				function()
-				{
-
-					/* for some reason the call to: $('#TagListContainer').is(':visible'); returns the correct answer BEFORE
-						the call to runEffect('#TagListContainer'); (and by extension .toggle())
-						however AFTER the effect, it is always true. So taking the 
-						pre value and using that for the logic later on.
-					*/
-					var isVisiblePreToggle = $('#TagListContainer').is(':visible');
-					
-					console.log('inverting visibility....');					
-					runEffect('#TagListContainer');
-					
-					//inverting the condition since the value being evaluated
-					// is the pre toggled value
-					changeText(!isVisiblePreToggle,"#ShowHideTagList","[-]Tag List","[+]Tag List");
-														
-					return false;
-				}
-			);
-			
-			$("#ShowHideFaveBooks").click(
-				function()
-				{
-					var isVisiblePreToggle = $('#FaveBooksContainer').is(':visible');
-					runEffect("#FaveBooksContainer");
-					changeText(!isVisiblePreToggle,"#ShowHideFaveBooks","[-]Fave Books","[+]Fave Books");
-					return false;
-				}
-			);
-			
-			$("#ShowHideArchives").click(
-				function()
-				{
-					var isVisiblePreToggle = $('#ArchiveContainer').is(':visible');
-					runEffect("#ArchiveContainer");
-					changeText(!isVisiblePreToggle,"#ShowHideArchives","[-]Archives","[+]Archives");
-					return false;
-				}
-			);
-		}
-	);
-
-		
-	</script>
 </body>
 </html>

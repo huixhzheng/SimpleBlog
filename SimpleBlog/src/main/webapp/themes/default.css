@@ -27,7 +27,9 @@ body {
 	width:100%;
 	/* border around whole list*/
 	border:1px solid #EBEBEB;
-	border-width:1px 0;
+
+	/*border-width:1px 0; */ /*what's this one for? */
+
 	
 	/*
 	background-image: -moz-linear-gradient(top , #555555, #444444 50.0%,#000000 100.0%);
@@ -70,6 +72,7 @@ body {
 	background-image: linear-gradient(top , #555555, #444444 50.0%,#000000 100.0%)
 	
 	*/
+	border:1px solid #000000;
 }
 
 #nav a:hover,a:focus
@@ -79,6 +82,26 @@ body {
 	border:1px solid #66CCFF;
 		
 }
+
+#Paging
+{
+	background-color: black;
+}
+
+#Paging a:link, #Paging a:visited
+{
+
+	padding-left:40px;
+	padding-right:40px;
+	padding-top:40px;
+	padding-bottom:40px;
+
+	color:#66CCFF;
+	font-size:150%;
+	font-weight:bold;
+}
+
+
 
 #SideNav
 {
@@ -98,6 +121,8 @@ body {
 	list-style-position:inside;
 	margin:0;
 	padding:0;	
+
+
 }
 
 #SideNav a:link,#SideNav a:visited
@@ -130,7 +155,8 @@ body {
 	color:#66CCFF;
 	background-color: #000000;
 	text-align:left;
-	border:0px;
+
+	border:1px solid #000000;
 /*	float:left;	*/
 }
 #SideNav a.listHeader:hover,a.listHeader:focus
@@ -144,6 +170,41 @@ body {
 	color: black;
 }
 
-.blogTitle {
+
+#BlogEntries
+{
+}
+#BlogEntries .blogTitle
+{
 	color: #66CCFF;
+	font-size:150%;
+	font-weight:bold;
+}
+#BlogEntries .contentLabel
+{
+	font-weight:bold;
+}
+#BlogEntries .label
+{
+	font-weight:normal;
+}
+
+#BlogEntries .toggleVisibilityLink
+{
+	color: #66CCFF;
+	font-weight:bold;
+}
+#BlogEntries .blogText
+{
+	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size:110%;
+
+	padding-right: 25px;
+	padding-left: 25px;
+
+	
+}
+#BlogEntries .continueReading
+{
+	font-size:75%;
 }
