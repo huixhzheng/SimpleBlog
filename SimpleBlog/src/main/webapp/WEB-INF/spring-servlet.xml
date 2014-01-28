@@ -225,7 +225,7 @@
 
 	<!-- Decorator beans -->
 	<bean id="blogDecorator"
-		class="com.duell.blogging.view.decorator.blogentry.ShortenDisplayContentDecorator">
-		<property name="numChars" value="130" />
+		class="com.duell.blogging.view.decorator.blogentry.SplitDisplayContentDecorator">
+		<property name="numChars" value="500" />
 	</bean>
 </beans>

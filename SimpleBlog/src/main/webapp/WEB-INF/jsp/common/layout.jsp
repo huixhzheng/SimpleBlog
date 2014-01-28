@@ -53,6 +53,15 @@
 			<tiles:insertAttribute name="footer" />
 		</div>
 	</div>
-	
+	<script>
+		
+		//Execute right away
+		$(			
+			function()
+			{
+				setDefaultViewableState();
+			}
+		);
+	</script>
 </body>
 </html>
