@@ -136,23 +136,6 @@ public class BlogController
 
 		return "home.page";
 	}
-/*
-	@RequestMapping(method = RequestMethod.GET)
-	public String listAllBlogs(Map<String, Object> map)
-	{
-		PagingInfo pageInfo = new PagingInfo(-1, -1);
-		BlogListPageBean pageBean = bloggingService.listBlogEntries(pageInfo);
-
-		map.put("blogEntries", pageBean.getBlogEntries());
-
-		// map.put("tagList", pageBean.getSideTagEntries());
-		// map.put("title", "Blog Listing");
-		// map.put("paging",pageBean.getPagingInfo());
-
-		return "home.page";
-
-	}
-	*/
 	/**
 	 * 
 	 * @param month
@@ -221,6 +204,17 @@ public class BlogController
 		return new ModelAndView("blog.page", "comment", new UIComment());
 	}
 
+	@RequestMapping(value="/{blogId}/comments",method=RequestMethod.GET)
+	public ModelAndView getComments(@PathVariable("blogId") Integer blogId,
+			Map<String,Object> map)
+	{
+		//TODO create service for retrieving the comments directly.
+		Collection<UIComment> comments = bloggingService.getBlogById(blogId).getComments();
+		
+		map.put("commentList", comments);
+		
+		return new ModelAndView("comments.page","comment", new UIComment());
+	}
 	@RequestMapping(value = "/{blogId}", method = RequestMethod.POST)
 	public ModelAndView addComment(@PathVariable("blogId") Integer blogId,
 			@ModelAttribute("comment") @Valid UIComment comment, BindingResult result, Map<String, Object> map)
