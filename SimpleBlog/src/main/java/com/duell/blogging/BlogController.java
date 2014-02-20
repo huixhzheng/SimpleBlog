@@ -189,10 +189,11 @@ public class BlogController
 	@RequestMapping(value = "/{blogId}", method = RequestMethod.GET)
 	public ModelAndView showBlog(@PathVariable("blogId") Integer blogId, Map<String, Object> map)
 	{
-
+		logger.debug("Starting 'showBlog'");
 		UIBlogEntry entry = bloggingService.getBlogById(blogId);
 
 		map.put("blogEntry", entry);
+		map.put("blogId", blogId);
 		map.put("tagList", bloggingService.listTagEntries());
 		/*
 		 * "command" is a key looked for by the spring mvc framework. Sending a
@@ -208,9 +209,11 @@ public class BlogController
 	public ModelAndView getComments(@PathVariable("blogId") Integer blogId,
 			Map<String,Object> map)
 	{
+		logger.debug("Starting 'getComments'");
+		logger.debug("Getting comments for blogId="+blogId);
 		//TODO create service for retrieving the comments directly.
 		Collection<UIComment> comments = bloggingService.getBlogById(blogId).getComments();
-		
+		logger.debug("comments="+comments);
 		map.put("commentList", comments);
 		
 		return new ModelAndView("comments.page","comment", new UIComment());

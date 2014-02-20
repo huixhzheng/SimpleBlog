@@ -7,27 +7,6 @@
 		<tiles:insertAttribute name="blog.content.meta.tags" />
 	</div>
 	<div id="Comments">
-		<!-- <tiles:insertAttribute name="blog.content.comments" /> -->
+		<tiles:insertAttribute name="blog.content.comments" />
 	</div>
-	<script>
-		$(function()
-		{
-			$.get("/SimpleBlog/blog/11/comments.html",function(data)
-					{
-						console.log(data);
-						$("#Comments").html(data);
-						console.log("Loaded comments.html via get");
-					}
-					
-			
-			);
-			/*
-				$("#Comments").load("/SimpleBlog/blog/11/comments.html",function()
-					{
-						console.log("loaded comments.html");
-					}
-				);
-			*/
-		});
-	</script>
 </div>

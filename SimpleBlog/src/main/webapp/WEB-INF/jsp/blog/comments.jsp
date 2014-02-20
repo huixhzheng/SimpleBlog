@@ -2,34 +2,13 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <table border="1" class="commentOuter">
-	<%
-		//should never be empty.. but whatever
-	%>
-	<!--<c:if test="${!empty blogEntry}">-->
-		<c:if test="${!empty commentList}">
-			<p>comments!</p>
-			<tr>
-				<td><c:forEach items="${commentList}" var="comment">
-						<table border="1"
-							class="commentIndividual">
-							<tr>
-								<td><h4>${comment.commenterName}</h4>
-							</tr>
-							<tr>
-								<td>${comment.comment}</td>
-							</tr>
-						</table>
-					</c:forEach></td>
-			</tr>
-		</c:if>
-		<c:if test="${empty commentList}">
-			<tr>
-				<td>
-					<p>No comments</p>
-				</td>
-			</tr>
-		</c:if>
-	<!--</c:if>-->
+	
+	<p>Comments!</p>
+	<div id="CommentList">
+	
+	</div>
+	
+	
 	<tr>
 		<td><span class="commentControls"
 			onclick="showElement('comments')">Reply</span></td>
@@ -40,7 +19,9 @@
 	</tr>
 	<%-- --%>
 	<tr>
-		<td><form:form modelAttribute="comment" method="post" action="/SimpleBlog/blog/${blogEntry.id}.html">
+	
+		<td><form:form modelAttribute="comment" method="post" action="/SimpleBlog/blog/${blogId}.html">
+	
 				<table border="1" id="comments">
 					<tr>
 						<td><form:label path="commenterName">Name</form:label> <form:input
@@ -58,10 +39,37 @@
 						<td><form:errors path="comment" cssStyle="color: red;" /></td>
 					</tr>
 					<tr>
-						<td><input type="hidden" name="parentBlogId"
-							value="${blogEntry.id}" /> <input type="submit" value="Reply" /></td>
+						<td>
+						<input type="hidden" name="parentBlogId" value="${blogId}" /> 
+						<input type="submit" value="Reply" />
+						</td>
 					</tr>
 				</table>
 			</form:form></td>
 	</tr>
 </table>
+	<script>
+		$(function()
+		{
+			$.get("/SimpleBlog/blog/${blogId}/comments",function(data)
+					{
+						console.log(data);
+						var commentList = data.commentList;
+						for(var i=0;i<commentList.length;i++)
+						{
+							console.log("appending item " + i);
+							$("#CommentList").append("<table border='1' class='commentIndividual'>")
+									.append("<tr><td><h4>"
+											.concat(commentList[i].commenterName)
+											.concat("</h4></tr>"))
+									.append("<tr><td>"
+											.concat(commentList[i].comment)
+											.concat("</td></tr></table>")
+									);
+							
+						}
+						console.log("Loaded comments.html via get");
+					}			
+			);
+		});
+	</script>
